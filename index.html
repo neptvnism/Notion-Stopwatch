@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Timer Widget</title>
+  <title>Notion Stopwatch ⏱️</title>
   <style>
     body {
       margin: 0;
@@ -52,12 +52,51 @@
   <div class="timer-container">
     <div class="timer-display">00:00</div>
     <div class="timer-controls">
-      <button class="timer-button" id="start-button">Start</button>
-      <button class="timer-button" id="reset-button">Reset</button>
+      <button class="timer-button" id="start-button">Start 🏃</button>
+      <button class="timer-button" id="reset-button">Reset 🔄</button>
     </div>
   </div>
   <script>
-    // JavaScript code for the timer will go here!!
+    const timerDisplay = document.querySelector('.timer-display');
+    const startButton = document.getElementById('start-button');
+    const resetButton = document.getElementById('reset-button');
+
+    let intervalId;
+    let seconds = 0;
+    let minutes = 0;
+
+    // Update the display
+    function updateTimerDisplay() {
+      timerDisplay.textContent = `${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    // Pad numbers with leading zeros
+    function pad(number) {
+      return (number < 10 ? '0' : '') + number;
+    }
+
+    // Function to start the stopwatch
+    function startTimer() {
+      intervalId = setInterval(() => {
+        seconds++;
+        if (seconds === 60) {
+          seconds = 0;
+          minutes++;
+        }
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    // Reset stopwatch
+    function resetTimer() {
+      clearInterval(intervalId);
+      seconds = 0;
+      minutes = 0;
+      updateTimerDisplay();
+    }
+
+    startButton.addEventListener('click', startTimer);
+    resetButton.addEventListener('click', resetTimer);
   </script>
 </body>
 </html>
